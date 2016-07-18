@@ -229,15 +229,16 @@ public class view extends javax.swing.JFrame {
         
         txtRecibo.setText("");
         txtRecibo.append("Recibo de Honorarios \n");
-        txtRecibo.append("Empleado:          "+hon.getNombre_Trabajador()+"\n");
-        txtRecibo.append("Horas por Día:     "+hon.getHoras_diarias()+"\n");
-        txtRecibo.append("Días Laborados:    "+hon.getDias_trabajados()+"\n");
-        txtRecibo.append("Paga por Hora:     "+hon.getPago_x_hora()+"\n");
-        txtRecibo.append("Subtotal a Pagar:  "+(hon.getTotal_a_pagar()+hon.getImpuesto())+"\n");
-        txtRecibo.append("Cantidad Retenida: "+hon.getImpuesto()+"\n");
-        txtRecibo.append("Total a Pagar*:     "+hon.getTotal_a_pagar()+"\n");
+        txtRecibo.append("Empleado:             "+hon.getNombre_Trabajador()+"\n");
+        txtRecibo.append("Horas por Día:        "+hon.getHoras_diarias()+"\n");
+        txtRecibo.append("Días Laborados:       "+hon.getDias_trabajados()+"\n");
+        txtRecibo.append("Paga por Hora:        "+hon.getPago_x_hora()+"\n");
+        txtRecibo.append("Subtotal a Pagar:     "+(hon.getTotal_a_pagar()+hon.getImpuesto())+"\n");
+        txtRecibo.append("Impuesto a la renta*: "+hon.getImpuesto()+"\n");
+        txtRecibo.append("Cantidad Retenida:    "+hon.getRete()+"\n");
+        txtRecibo.append("Total a Pagar:        "+hon.getTotal_a_pagar()+"\n");
         txtRecibo.append(""+"\n"+""+"\n");
-        txtRecibo.append("*Si el total a pagar es mayor a 1500, se retiene un 10% del total");
+        txtRecibo.append("*Si el impuesto a la renta es mayor a 1500, se retiene un 10% del impuesto");
         
         
         

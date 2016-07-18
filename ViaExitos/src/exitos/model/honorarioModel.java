@@ -19,15 +19,19 @@ public class honorarioModel {
     
     public void procesar_datos(honorario ho){
         double total=ho.getDias_trabajados()*ho.getHoras_diarias()*ho.getPago_x_hora();
-        double impuesto=0;
-        if (total>=1500) {
-            impuesto=Constante.IMPUESTO*total;
-            total=total-impuesto;
+        double impuesto=total*Constante.IMPUESTO;
+        double retension=0;
+        
+        total=total-impuesto;
+        if (impuesto>=1500) {
+            retension=Constante.RETE*impuesto;
+            impuesto=impuesto-retension;
                
         }
         
         ho.setTotal_a_pagar(total);
         ho.setImpuesto(impuesto);
+        ho.setRete(retension);
         
     }
     

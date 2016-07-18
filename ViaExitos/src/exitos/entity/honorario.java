@@ -18,6 +18,7 @@ public class honorario {
     private double pago_x_hora;
     private double impuesto;
     private double total_a_pagar;
+    private double rete;
     
     //constructor
 
@@ -73,6 +74,14 @@ public class honorario {
 
     public void setTotal_a_pagar(double total_a_pagar) {
         this.total_a_pagar = total_a_pagar;
+    }
+    
+    public double getRete(){
+        return rete;
+    }
+    
+    public void setRete(double rete){
+        this.rete=rete;
     }
     
     

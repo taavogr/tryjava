@@ -11,6 +11,7 @@ package exitos.cons;
  */
 public class Constante {
     
-    public static final double IMPUESTO=0.10;
+    public static final double IMPUESTO=0.27;
+    public static final double RETE=0.10;
     
 }
