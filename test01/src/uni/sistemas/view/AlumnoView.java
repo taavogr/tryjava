@@ -301,7 +301,7 @@ public class AlumnoView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     //instanciar objeto de la clase ProductoController
     AlumnoController obj = new AlumnoController();
-    Alumno pro;
+    Alumno alu;
 
     private void procesar(int op) {
         String msg = "";
@@ -319,23 +319,23 @@ public class AlumnoView extends javax.swing.JFrame {
                 msg = "Alumno eliminado con exito";
                 break;
             case 4:
-                verProducto();
+                verAlumno();
                 return;
         }
         JOptionPane.showMessageDialog(null, msg);
         listarAlumnos();
     }
 
-    private void verProducto() {
-        pro = obj.BuscarAlumno(Integer.parseInt(txtID.getText()));
-        if (pro != null) {
-            txtNombre.setText(pro.getNombre());
-            txtFinal.setText(pro.getExa_final() + "");
-            txtPractica.setText(pro.getPractica() + "");
-            cboCurso.setSelectedItem(pro.getCurso());
-            txtParcial.setText(pro.getExa_parcial()+"");
-            lblPromedio.setText(pro.getPromedio()+"");
-            lblEstado.setText(pro.getEstado());
+    private void verAlumno() {
+        alu = obj.BuscarAlumno(Integer.parseInt(txtID.getText()));
+        if (alu != null) {
+            txtNombre.setText(alu.getNombre());
+            txtFinal.setText(alu.getExa_final() + "");
+            txtPractica.setText(alu.getPractica() + "");
+            cboCurso.setSelectedItem(alu.getCurso());
+            txtParcial.setText(alu.getExa_parcial()+"");
+            lblPromedio.setText(alu.getPromedio()+"");
+            lblEstado.setText(alu.getEstado());
         }else{
             JOptionPane.showMessageDialog(null, "Alumno  no existe");
         }
@@ -353,27 +353,27 @@ public class AlumnoView extends javax.swing.JFrame {
     }
 
     private Alumno leerAlumno() {
-        pro = new Alumno();
+        alu = new Alumno();
         //asignar valores al objeto pro
-        pro.setId(Integer.parseInt(txtID.getText()));
-        pro.setNombre(txtNombre.getText());
-        pro.setCurso(cboCurso.getSelectedItem().toString());
-        pro.setExa_parcial(Double.parseDouble(txtParcial.getText()));
-        pro.setExa_final(Double.parseDouble(txtFinal.getText()));
-        pro.setPractica(Double.parseDouble(txtPractica.getText()));
+        alu.setId(Integer.parseInt(txtID.getText()));
+        alu.setNombre(txtNombre.getText());
+        alu.setCurso(cboCurso.getSelectedItem().toString());
+        alu.setExa_parcial(Double.parseDouble(txtParcial.getText()));
+        alu.setExa_final(Double.parseDouble(txtFinal.getText()));
+        alu.setPractica(Double.parseDouble(txtPractica.getText()));
         double promedio;
-        promedio=(pro.getExa_final()+pro.getExa_parcial()+pro.getPractica())/3;
-        pro.setPromedio(promedio);
+        promedio=(alu.getExa_final()+alu.getExa_parcial()+alu.getPractica())/3;
+        alu.setPromedio(promedio);
         if (promedio>=14) {
-            pro.setEstado("Aprobado");
+            alu.setEstado("Aprobado");
             
         }else if(promedio>=11 && promedio<14){
-            pro.setEstado("Sustitutorio");
+            alu.setEstado("Sustitutorio");
         }else{
-            pro.setEstado("Desaprobado");
+            alu.setEstado("Desaprobado");
         }
         
-        return pro;
+        return alu;
     }
 
 }
