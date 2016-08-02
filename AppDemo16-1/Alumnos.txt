@@ -1,0 +1,3 @@
+101#Juan Perez#Java POO#15.0#Aprobado
+103#Luis Florez#Java Web#16.0#Aprobado
+102#Karina Gonzales#Windows 10#17.0#Aprobado
