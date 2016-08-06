@@ -51,6 +51,7 @@ public class vistaProductos extends javax.swing.JFrame {
         btnListar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("::INVENTARIO DE PRODUCTOS::");
 
         jLabel1.setText("Nombre del Producto:");
 

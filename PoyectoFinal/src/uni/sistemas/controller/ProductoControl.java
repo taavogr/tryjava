@@ -38,5 +38,9 @@ public class ProductoControl {
         return dao.leer();
     }
     
+    public Producto BuscarxNombre(String x) throws Exception{
+        return dao.buscarxnombre(x);
+    }
+    
     
 }

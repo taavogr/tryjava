@@ -37,7 +37,7 @@ public class FacturaDaoFile implements FacturaDao<Factura>{
           
             fw=new FileWriter(archivo,true);
             pw=new PrintWriter(fw);
-            dato=count+"#"+ a.getCodigo_clitente()+"#"+a.getFecha_venta().toString()+"#"+a.getMonto();
+            dato=count+"#"+ a.getCodigo_clitente()+"#"+a.getFecha_venta().toString()+"#"+a.getMonto()+"\n";
             pw.write(dato);
             pw.close();
             

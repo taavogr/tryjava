@@ -75,6 +75,7 @@ public class ProductoDaoFile implements ICrudDao<Producto>{
                 }
                 linea=br.readLine();
             }
+            br.close();
              borrar_archivo(archivo);
             renombrar_archivo(archivo);
         }catch(IOException | NumberFormatException e){
@@ -103,6 +104,7 @@ public class ProductoDaoFile implements ICrudDao<Producto>{
                 }
                 linea=br.readLine();
             }
+            br.close();
             borrar_archivo(archivo);
             renombrar_archivo(archivo);
         }catch(IOException | NumberFormatException e){
@@ -123,7 +125,7 @@ public class ProductoDaoFile implements ICrudDao<Producto>{
                 
                 if (codigo== a) {
                 pro= new Producto();
-                pro.setCodigo(Integer.parseInt(token.nextToken()));
+                pro.setCodigo(codigo);
                 pro.setNombre(token.nextToken());
                 pro.setPrecio(Double.parseDouble(token.nextToken()));
                 pro.setStock(Integer.parseInt(token.nextToken()));
@@ -184,8 +186,45 @@ public class ProductoDaoFile implements ICrudDao<Producto>{
         File nuevo_archivo=new File(ruta);
         File viejo_nombre=new File(temporal);
         if (viejo_nombre.renameTo(nuevo_archivo)) {
+            
+        }else{
             System.out.println("No se puede renombrar");
         }
+    }
+
+    @Override
+    public Producto buscarxnombre(String a) throws Exception {
+        
+        Producto pro=null;
+        try{
+            fr= new FileReader(archivo);
+            br= new BufferedReader(fr);
+            dato=br.readLine();
+            while (dato!=null) {
+                StringTokenizer token = new StringTokenizer(dato,"#");
+                token.nextToken();
+                String nombre =token.nextToken();
+                
+                if (nombre.equals(a) ) {
+                StringTokenizer token2 = new StringTokenizer(dato,"#");
+                pro= new Producto();
+                pro.setCodigo(Integer.parseInt(token2.nextToken()));
+                pro.setNombre(nombre);
+                pro.setPrecio(Double.parseDouble(token.nextToken()));
+                pro.setStock(Integer.parseInt(token.nextToken()));
+                }
+                
+               
+                dato=br.readLine();
+            }
+            br.close();
+        }catch(IOException | NumberFormatException e){
+            throw e;
+        }finally{
+            fr.close();
+        }
+        return pro;
+        
     }
     
 }

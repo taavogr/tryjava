@@ -17,5 +17,6 @@ public interface ICrudDao <T> {
     void actualizar (T a) throws Exception;
     void eliminar(T a) throws Exception;
     T buscar(int a) throws Exception;
+    T buscarxnombre(String a) throws Exception;
     List <T> leer() throws Exception;
 }

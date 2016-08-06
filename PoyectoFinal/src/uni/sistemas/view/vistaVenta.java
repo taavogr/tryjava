@@ -8,8 +8,12 @@ package uni.sistemas.view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import uni.sistemas.controller.FacturaControl;
+import uni.sistemas.controller.ProductoControl;
+import uni.sistemas.entity.Detalle;
 import uni.sistemas.entity.Factura;
+import uni.sistemas.entity.Producto;
 
 /**
  *
@@ -20,8 +24,11 @@ public class vistaVenta extends javax.swing.JFrame {
     /**
      * Creates new form vistaVenta
      */
-    public vistaVenta() {
+    public vistaVenta()  {
+        
+        
         initComponents();
+        
     }
 
     /**
@@ -40,13 +47,15 @@ public class vistaVenta extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCliente = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDetalle = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("::VENTA DE PRODUCTOS::");
 
         jLabel1.setText("Producto: ");
 
@@ -54,7 +63,7 @@ public class vistaVenta extends javax.swing.JFrame {
 
         jLabel3.setText("Codigo Cliente:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,7 +74,7 @@ public class vistaVenta extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Precio Unitario", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblDetalle);
 
         jButton1.setText("Facturar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -75,10 +84,17 @@ public class vistaVenta extends javax.swing.JFrame {
         });
 
         jButton2.setText("Agregar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Total a Pagar:");
 
         lblTotal.setText("0.0");
+
+        jLabel5.setText("Primero cree la Factura con el boton Facturar(agregar un codigo de cliente), despues agregre los productos y la cantidad.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,8 +127,11 @@ public class vistaVenta extends javax.swing.JFrame {
                                 .addComponent(jLabel4))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
-                                .addComponent(lblTotal)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                .addComponent(lblTotal))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +160,9 @@ public class vistaVenta extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(lblTotal)))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,6 +177,15 @@ public class vistaVenta extends javax.swing.JFrame {
             Logger.getLogger(vistaVenta.class.getName()).log(Level.SEVERE,null,ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            agregarFactura();
+            listar_detaller();
+        } catch (Exception  ex) {
+            Logger.getLogger(vistaVenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +217,9 @@ public class vistaVenta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new vistaVenta().setVisible(true);
+                
+                    new vistaVenta().setVisible(true);
+                
             }
         });
     }
@@ -200,20 +232,63 @@ public class vistaVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JTable tblDetalle;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 
     FacturaControl controlador2=new FacturaControl();
     Factura fact;
+    Detalle det;
+    ProductoControl procon = new ProductoControl();
+    double total=0;
+    Producto producto;
+    
     private void crearFactura() throws Exception{
         
         fact=new Factura();
         fact.setCodigo_clitente(Integer.parseInt(txtCliente.getText()));
         fact.setMonto(Double.parseDouble(lblTotal.getText()));
         controlador2.facturar(fact);
+        inicio_combobox();
+    }
+
+    private void inicio_combobox() throws Exception {
+        for (Producto pro : procon.ListarProducto()) {
+            cmbProducto.addItem(pro.getNombre());
+           
+//            cmbProducto.setSelectedIndex(pro.getCodigo());
+        }
+    }
+
+    private void agregarFactura() throws Exception {
+        
+        producto= new Producto();
+        
+        int indice= cmbProducto.getSelectedIndex();
+        producto= procon.BuscarxNombre(cmbProducto.getItemAt(indice));
+        det=new Detalle();
+        det.setCodigo(producto.getCodigo());
+        det.setNombre(producto.getNombre());
+        det.setPrecio_unitario(producto.getPrecio());
+        det.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        
+        controlador2.agregar_prod(det);
+        
+        total+=det.getCantidad()*det.getPrecio_unitario();
+        lblTotal.setText(total+"");
+        
+    }
+
+    private void listar_detaller() throws Exception {
+        DefaultTableModel model=(DefaultTableModel) tblDetalle.getModel();
+        model.setRowCount(0);
+        for (Detalle deta : controlador2.listar_detalles()) {
+            Object[] dato={deta.getCodigo(),deta.getNombre(),deta.getPrecio_unitario(),deta.getCantidad()};
+            model.addRow(dato);
+        }
     }
 }
